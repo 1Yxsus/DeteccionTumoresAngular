@@ -9,7 +9,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 CORS(app)
 
 # Configuración del interprete TFLite
@@ -69,9 +69,13 @@ def clasificar_api():
         'probs': probabilities
     })
 
-@app.route('/')
-def health_check():
-    return "Servidor activo. Usa el endpoint /api/clasificar para predicciones.", 200
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + '/frontend/browser/' + path):
+        return app.send_static_file('frontend/browser/' + path)
+    else:
+        return app.send_static_file('frontend/browser/index.html')
 
 import os
 if __name__ == "__main__":
