@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common'; // Para @if y @for
   styleUrl: './app.css'
 })
 export class AppComponent {
-  private readonly API_URL = 'https://detecciontumoresangular.onrender.com';
+  private readonly API_URL = 'https://detecciontumoresangular.onrender.com/';
 
   image: File | null = null;
   prediction = '';
