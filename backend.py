@@ -69,13 +69,13 @@ def clasificar_api():
         'probs': probabilities
     })
 
-@app.route('/')
-def index():
-    return jsonify({
-        "status": "online",
-        "mensaje": "Servidor de Detección de Tumores funcionando",
-        "endpoint_valido": "/api/clasificar (POST)"
-    }), 200
+# @app.route('/')
+# def index():
+#     return jsonify({
+#         "status": "online",
+#         "mensaje": "Servidor de Detección de Tumores funcionando",
+#         "endpoint_valido": "/api/clasificar (POST)"
+#     }), 200
 
 import os
 if __name__ == "__main__":
