@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common'; // Para @if y @for
   styleUrl: './app.css'
 })
 export class AppComponent {
-  private readonly API_URL = 'https://detecciontumoresangular.onrender.com/';
+  private readonly API_URL = 'https://detecciontumoresangular.onrender.com';
 
   image: File | null = null;
   prediction = '';
@@ -39,12 +39,13 @@ export class AppComponent {
   }
 
   handleSubmit(event: Event) {
-    event.preventDefault();
+    if (event) event.preventDefault(); // Evita errores si el evento es nulo
     if (!this.image) return;
 
     const formData = new FormData();
     formData.append('image', this.image);
 
+    // La URL ahora será correcta: ...com/api/clasificar
     this.http.post<any>(`${this.API_URL}/api/clasificar`, formData).subscribe({
       next: (data) => {
         this.prediction = data.prediction;
@@ -52,8 +53,9 @@ export class AppComponent {
         this.probs = data.probs;
       },
       error: (err) => {
-        alert('Error al clasificar la imagen');
-        console.error(err);
+        // Mira la consola para ver si el error es de CORS o de URL
+        console.error('Detalles del error:', err);
+        alert('Error en la conexión con el servidor');
       }
     });
   }
